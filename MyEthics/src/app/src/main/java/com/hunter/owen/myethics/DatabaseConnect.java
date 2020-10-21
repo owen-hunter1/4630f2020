@@ -1,6 +1,8 @@
 package com.hunter.owen.myethics;
 
 import android.content.Context;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -10,6 +12,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,6 +21,8 @@ import java.util.Map;
 
 public class DatabaseConnect {
     protected Context ctx;
+    private String lastRequestResult;
+    private TextView errorText;
 
     public DatabaseConnect(Context ctx) {
         //avoid memory leaks
@@ -31,7 +37,13 @@ public class DatabaseConnect {
             @Override
             public void onResponse(String response) {
                 //Toast.makeText(ctx, "Yay! this worked", Toast.LENGTH_LONG).show();
-                Toast.makeText(ctx, response, Toast.LENGTH_LONG).show();
+                JsonObject jsonObject = JsonParser.parseString(response).getAsJsonObject();
+                if(jsonObject.has("error")) {
+                    String s = jsonObject.get("error").toString();
+                    s = s.substring(1, s.length() - 1);
+                    errorText.setText(s);
+                    errorText.setVisibility(View.VISIBLE);
+                }
             }
         }, new Response.ErrorListener() {
             @Override
@@ -58,7 +70,7 @@ public class DatabaseConnect {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Toast.makeText(ctx, response.toString(), Toast.LENGTH_LONG).show();
+                lastRequestResult = response;
             }
         }, new Response.ErrorListener() {
             @Override
@@ -77,5 +89,13 @@ public class DatabaseConnect {
         };
 
         queue.add(stringRequest);
+    }
+
+    public String getLastRequestResult() {
+        return lastRequestResult;
+    }
+
+    public void setErrorText(TextView errorText) {
+        this.errorText = errorText;
     }
 }

@@ -58,6 +58,15 @@
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
                     android:textColor="#FFFFFF"/>
+                <TextView
+                    android:id="@+id/login_error"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#FF0000"
+                    android:text=""
+                    android:textSize="15dp"
+                    android:visibility="gone"
+                    android:paddingLeft="10dp" />
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -79,11 +88,7 @@
                     android:textColor="#FFFFFF"
                     android:text="register"/>
                 </LinearLayout>
-                <TextView
-                    android:id="@+id/login_error"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="" />
+
 
             </LinearLayout>
         </LinearLayout>

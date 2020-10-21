@@ -31,11 +31,7 @@ public class RegisterActivity extends Activity {
                 String userEmail = emailInput.getText().toString();
                 String userPassword = passwordInput.getText().toString();
                 String userConfirm = confirmInput.getText().toString();
-                if (userEmail != "" && userPassword != "" && userConfirm != "") {
-                    dbc.Register(userEmail, userPassword, userConfirm);
-                } else {
-                    errorText.setText("Error");
-                }
+                dbc.Register(userEmail, userPassword, userConfirm);
             }
         });
     }
