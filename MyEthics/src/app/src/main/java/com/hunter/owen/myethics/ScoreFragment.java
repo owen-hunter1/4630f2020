@@ -13,6 +13,7 @@ public class ScoreFragment extends Fragment {
     public static ScoreFragment newInstance() {
         return new ScoreFragment();
     }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

@@ -20,10 +20,8 @@ public class DashboardFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         //todo: fetch dashboards from DB
-        int groupCount = 2;
-        EthicGroup[] ethicGroups = new EthicGroup[groupCount];
-        ethicGroups[0] = new EthicGroup();
-
+        //DatabaseConnect databaseConnect = new DatabaseConnect(this.getContext());
+        //databaseConnect.getDashboardGroups();
 
         //todo: populate dashboard objects
 

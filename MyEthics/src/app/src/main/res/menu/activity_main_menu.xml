@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group>
-        <item android:id="@+id/nav_dashboard"
+        <item
+            android:id="@+id/nav_dashboard"
             android:title="Ethics Board" />
-        <item android:id="@+id/nav_ethics_score"
+        <item
+            android:id="@+id/nav_ethics_score"
             android:title="Ethics Score" />
-        <item android:id="@+id/nav_settings"
+        <item
+            android:id="@+id/nav_settings"
             android:title="Settings" />
     </group>
 </menu>
