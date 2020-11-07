@@ -1,6 +1,7 @@
 package com.hunter.owen.myethics;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,18 +33,24 @@ public class DatabaseConnect {
     public void Login(final String email, final String password) {
         RequestQueue queue = Volley.newRequestQueue(ctx);
         String url = "http://www.treatyelm.com/ohunter/login.php";
-
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                //Toast.makeText(ctx, "Yay! this worked", Toast.LENGTH_LONG).show();
                 JsonObject jsonObject = JsonParser.parseString(response).getAsJsonObject();
-                if(jsonObject.has("error")) {
-                    String s = jsonObject.get("error").toString();
-                    s = s.substring(1, s.length() - 1);
-                    errorText.setText(s);
+
+                int success = jsonObject.get("success").getAsInt();
+
+                if(success == 1) {
+                    Intent intent = new Intent(ctx, MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    ctx.startActivity(intent);
+                }else{
+                    String error = jsonObject.get("error").getAsString();
+                    errorText.setText(error);
                     errorText.setVisibility(View.VISIBLE);
                 }
+
+
             }
         }, new Response.ErrorListener() {
             @Override
@@ -70,7 +77,18 @@ public class DatabaseConnect {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                lastRequestResult = response;
+                JsonObject jsonObject = JsonParser.parseString(response).getAsJsonObject();
+
+                int success = jsonObject.get("success").getAsInt();
+
+                if(success == 1) {
+                    Login(email, password);
+                    return;
+                }else{
+                    String error = jsonObject.get("error").getAsString();
+                    errorText.setText(error);
+                    errorText.setVisibility(View.VISIBLE);
+                }
             }
         }, new Response.ErrorListener() {
             @Override

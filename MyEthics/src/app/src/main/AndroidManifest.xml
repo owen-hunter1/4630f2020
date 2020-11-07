@@ -3,7 +3,8 @@
     package="com.hunter.owen.myethics">
 
     <application android:usesCleartextTraffic="true">
-        <activity android:name=".RegisterActivity"></activity>
+        <activity android:name=".ViewGroupActivity"></activity>
+        <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity" />
         <activity
             android:name=".MainActivity"

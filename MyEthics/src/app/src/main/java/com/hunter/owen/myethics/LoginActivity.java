@@ -29,12 +29,8 @@ public class LoginActivity extends Activity {
             public void onClick(View view) {
                 String userEmail = emailInput.getText().toString();
                 String userPassword = passwordInput.getText().toString();
-                if (userEmail != "" && userPassword != "") {
                     dbc.Login(userEmail, userPassword);
                     dbc.setErrorText(errorText);
-                } else {
-                    errorText.setText("Please enter your email or password or register a new account");
-                }
             }
         });
 

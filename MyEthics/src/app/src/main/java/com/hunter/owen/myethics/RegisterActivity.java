@@ -32,6 +32,7 @@ public class RegisterActivity extends Activity {
                 String userPassword = passwordInput.getText().toString();
                 String userConfirm = confirmInput.getText().toString();
                 dbc.Register(userEmail, userPassword, userConfirm);
+                dbc.setErrorText(errorText);
             }
         });
     }

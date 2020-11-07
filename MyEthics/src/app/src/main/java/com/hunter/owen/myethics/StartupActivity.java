@@ -13,15 +13,18 @@ public class StartupActivity extends Activity {
         setContentView(R.layout.activity_startup);
         Intent intent;
         //todo: Account login
+
         SharedPreferences sp = getSharedPreferences("login", MODE_PRIVATE);
         DatabaseConnect dbc = new DatabaseConnect(this);
         if (sp.contains("email") && sp.contains("password")) {
             dbc.Login(sp.getString("email", ""), sp.getString("password", ""));
             intent = new Intent(this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         } else {
             //switch to main activity
             intent = new Intent(this, LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         }
     }
