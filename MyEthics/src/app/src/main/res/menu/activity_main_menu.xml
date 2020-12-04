@@ -8,6 +8,9 @@
             android:id="@+id/nav_ethics_score"
             android:title="Ethics Score" />
         <item
+            android:id="@+id/nav_purchases"
+            android:title="Purchases" />
+        <item
             android:id="@+id/nav_settings"
             android:title="Settings" />
     </group>

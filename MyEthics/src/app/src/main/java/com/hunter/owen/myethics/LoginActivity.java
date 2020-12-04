@@ -35,6 +35,7 @@ public class LoginActivity extends Activity {
         });
 
         //register
+
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

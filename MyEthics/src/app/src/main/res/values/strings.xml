@@ -16,4 +16,11 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="register_button_text"><u>register</u></string>
     <string name="app_name_bold"><b>MyEthics</b></string>
+    <string name="text_create_group_button"><b>Create Group</b></string>
+    <string-array name="defaults_array">
+        <item>&lt;select item&gt;</item>
+        <item>Vegan</item>
+        <item>Climate</item>
+        <item>Workers Rights</item>
+    </string-array>
 </resources>

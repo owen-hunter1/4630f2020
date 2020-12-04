@@ -3,4 +3,10 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="grey2">#CEE7ED</color>
+    <color name="grey1">#E2EFDB</color>
+    <color name="button_blue">#53DCED</color>
+    <color name="create_group_layout_background">#F8F6F6</color>
+    <color name="create_group_layout_background2">#F1F1F1</color>
+    <color name="create_group_label">#2196F3</color>
 </resources>

@@ -1,5 +1,6 @@
 package com.hunter.owen.myethics;
 
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -14,10 +15,12 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
     private ActionBarDrawerToggle drawerToggle;
     private DrawerLayout drawer;
+    private TextView textUserName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,12 +59,21 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.add(R.id.viewer, mainFragment);
         fragmentTransaction.commit();
 
+        //username display
+        textUserName = navigationView.getHeaderView(0).findViewById(R.id.nav_header_textView);
+        SharedPreferences sp = getSharedPreferences("login", MODE_PRIVATE);
+        if(sp.contains("username")){
+            textUserName.setText(sp.getString("username", ""));
+        }else if(sp.contains("email")){
+            textUserName.setText(sp.getString("email", ""));
+        }
     }
 
     @Override
     public void onPostCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
         super.onPostCreate(savedInstanceState, persistentState);
         drawerToggle.syncState();
+
     }
 
     @Override
@@ -86,6 +98,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.nav_ethics_score:
                 updateFragment = ScoreFragment.newInstance();
+                break;
+            case R.id.nav_purchases:
+                updateFragment = PurchasesFragment.newInstance();
                 break;
             case R.id.nav_settings:
                 updateFragment = SettingsFragment.newInstance();
