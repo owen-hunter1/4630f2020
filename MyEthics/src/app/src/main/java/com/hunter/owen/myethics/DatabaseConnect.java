@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.text.Editable;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -202,6 +203,42 @@ public class DatabaseConnect {
         queue.add(stringRequest);
     }
 
+    public void queryTags(final String text, final ServerCallback callback) {
+        RequestQueue queue = Volley.newRequestQueue(ctx);
+        String url = "http://www.treatyelm.com/ohunter/queryTags.php";
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                JsonObject jsonObject = JsonParser.parseString(response).getAsJsonObject();
+
+                int success = jsonObject.get("success").getAsInt();
+
+                if(success == 1) {
+                    callback.onSuccess(jsonObject);
+                }else{
+                    String error = jsonObject.get("error").getAsString();
+                    Toast.makeText(ctx, error, Toast.LENGTH_LONG).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(ctx, error.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                SharedPreferences sp = ctx.getSharedPreferences("login", MODE_PRIVATE);
+                params.put("user_id", String.valueOf(sp.getInt("user_id", 0)));
+                params.put("query", text);
+                return params;
+            }
+        };
+
+        queue.add(stringRequest);
+    }
+
     public String getLastRequestResult() {
         return lastRequestResult;
     }
@@ -209,5 +246,6 @@ public class DatabaseConnect {
     public void setErrorText(TextView errorText) {
         this.errorText = errorText;
     }
+
 
 }

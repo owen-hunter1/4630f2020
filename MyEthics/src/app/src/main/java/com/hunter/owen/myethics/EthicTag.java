@@ -34,4 +34,8 @@ public class EthicTag {
     public int getRating(){
         return rating;
     }
+
+    public void setTag(String replace) {
+        tag = replace;
+    }
 }

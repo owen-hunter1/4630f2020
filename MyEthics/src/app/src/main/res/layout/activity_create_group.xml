@@ -1,153 +1,183 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/backgroup_create_group">
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="5dp">
+            android:layout_height="match_parent"
+            android:layout_weight="1">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_margin="5dp"
-                android:padding="5dp"
-                android:background="@color/create_group_layout_background">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Defaults"
-                    android:textSize="14dp"
-                    android:textColor="@color/create_group_label"/>
-
-                <Spinner
-                    android:id="@+id/defaults_spinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_margin="5dp"
-                android:padding="5dp"
-                android:background="@color/create_group_layout_background">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Group Name"
-                    android:textSize="14dp"
-                    android:textColor="@color/create_group_label"/>
-
-                <EditText
-                    android:id="@+id/input_group_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@color/create_group_layout_background"
-            android:orientation="horizontal"
-            android:padding="5dp">
+                android:orientation="vertical">
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    >
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Add Tags"
-                        android:textColor="@color/create_group_label"
-                        android:textSize="14dp" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="12dp"
-                        android:visibility="gone"
-                        android:textColor="#CC1111"
-                        android:id="@+id/create_group_error_text"/>
-                    <EditText
-                        android:id="@+id/input_group_tag"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:hint="ex: vegan, sustainable, local" />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center">
-
-                        <Button
-                            android:id="@+id/create_group_like"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="" />
-
-                        <Button
-                            android:id="@+id/create_group_dislike"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-
-                        <SeekBar
-                            android:layout_width="125dp"
-                            android:layout_height="wrap_content"
-                            android:min="0"
-                            android:max="10"/>
-                    </LinearLayout>
-                </LinearLayout>
-                <Button
-                    android:id="@+id/add_tag_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/button_blue"
-                    android:text="add tag" />
-            </LinearLayout>
-
-        <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:background="@color/create_group_layout_background"
-                    android:gravity="center"
                     android:orientation="vertical"
                     android:padding="5dp">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Tags"
-                android:textColor="@color/create_group_label"
-                android:textSize="22dp" />
-
-                    <ListView
-                        android:id="@+id/add_tag_list_liked"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="300dp"
-                        android:layout_weight="1" />
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_margin="5dp"
+                        android:padding="5dp"
+                        android:background="@color/create_group_layout_background">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Defaults"
+                            android:textSize="14dp"
+                            android:textColor="@color/create_group_label"/>
+
+                        <Spinner
+                            android:id="@+id/defaults_spinner"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_margin="5dp"
+                        android:padding="5dp"
+                        android:background="@color/create_group_layout_background">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Group Name"
+                            android:textSize="14dp"
+                            android:textColor="@color/create_group_label"/>
+
+                        <EditText
+                            android:id="@+id/input_group_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@color/create_group_layout_background"
+                    android:orientation="horizontal"
+                    android:padding="5dp">
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_weight="4"
+                            >
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Add Tags"
+                                android:textColor="@color/create_group_label"
+                                android:textSize="14dp" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="12dp"
+                                android:visibility="gone"
+                                android:textColor="#CC1111"
+                                android:id="@+id/create_group_error_text"/>
+                            <SearchView
+                                    android:id="@+id/input_group_tag"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:queryHint="ex: vegan, sustainable, local" >
+                                    <requestFocus />
+                            </SearchView>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center">
+                                <RadioGroup
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+                                    <RadioButton
+                                        android:id="@+id/create_group_like"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:background="@drawable/thumb_up"
+                                        android:layout_marginHorizontal="5dp"/>
+
+                                    <RadioButton
+                                        android:id="@+id/create_group_dislike"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:background="@drawable/thumb_down"
+                                        android:layout_marginHorizontal="5dp"/>
+                                </RadioGroup>
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:layout_marginLeft="20dp">
+                                    <RatingBar
+                                        android:id="@+id/create_group_ratingBar"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:min="0"
+                                        android:max="10"
+                                        style="?android:attr/ratingBarStyleSmall"
+                                        />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </LinearLayout>
+                        <Button
+                            android:id="@+id/add_tag_button"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/button_blue"
+                            android:text="add tag"
+                            android:layout_weight="1"/>
+                    </LinearLayout>
+
+                <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:background="@color/create_group_layout_background"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="5dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tags"
+                        android:textColor="@color/create_group_label"
+                        android:textSize="22dp" />
+
+                    <ListView
+                        android:id="@+id/add_tag_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_weight="5">
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -158,4 +188,4 @@
                 android:textColor="#FFFFFF"/>
         </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+</FrameLayout>
