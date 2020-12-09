@@ -26,10 +26,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        setTitle("MyEthic Panel");
         //toolbar init
         Toolbar toolbar = findViewById(R.id.toolbar_main);
-        toolbar.setNavigationIcon(R.drawable.baseline_menu_black_18dp);
+        toolbar.setNavigationIcon(R.drawable.menu);
         setSupportActionBar(toolbar);
 
         //navbar init
@@ -94,15 +94,19 @@ public class MainActivity extends AppCompatActivity {
         //get the fragment corresponding with each menu item
         switch (menuItem.getItemId()) {
             case R.id.nav_dashboard:
+                setTitle("MyEthics Panel");
                 updateFragment = DashboardFragment.newInstance();
                 break;
             case R.id.nav_ethics_score:
+                setTitle("MyEthics Score");
                 updateFragment = ScoreFragment.newInstance();
                 break;
             case R.id.nav_purchases:
+                setTitle("Purchases");
                 updateFragment = PurchasesFragment.newInstance();
                 break;
             case R.id.nav_settings:
+                setTitle("Settings");
                 updateFragment = SettingsFragment.newInstance();
                 break;
         }

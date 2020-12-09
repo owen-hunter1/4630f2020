@@ -12,10 +12,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.google.gson.JsonArray;
@@ -29,10 +31,12 @@ import java.util.zip.Inflater;
 public class DashboardFragment extends Fragment {
 
     private MainViewModel mViewModel;
+    private Button removeGroupsButton;
     private LinearLayout ethicGroupContainer;
+    private LinearLayout leftEthicGroupContainer;
+    private LinearLayout rightEthicGroupContainer;
+
     private ImageButton buttonCreateGroup;
-    private TextView errorText;
-    private List<EthicGroup> ethicGroups;
 
     public static DashboardFragment newInstance() {
         return new DashboardFragment();
@@ -48,38 +52,39 @@ public class DashboardFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        removeGroupsButton = view.findViewById(R.id.hide_remove_groups_button);
         ethicGroupContainer = view.findViewById(R.id.ethic_group_container);
+        leftEthicGroupContainer = view.findViewById(R.id.left_ethic_group_container);
+        rightEthicGroupContainer = view.findViewById(R.id.right_ethic_group_container);
         buttonCreateGroup = view.findViewById(R.id.dashboard_create_group_button);
 
-        DatabaseConnect dbc = new DatabaseConnect(this.getContext());
-        dbc.setErrorText(errorText);
-        dbc.getDashboardGroups(new ServerCallback(){
+        removeGroupsButton.setVisibility(View.GONE);
+
+        DatabaseConnect.getGroups(view.getContext(), new ServerCallback(){
             @Override
             public void onSuccess(JsonObject result) {
                 if(result.has("groups")){
+                    leftEthicGroupContainer.removeAllViews();
+                    rightEthicGroupContainer.removeAllViews();
                     JsonArray resultAsJsonArray = result.getAsJsonArray("groups");
+                    boolean isLeft = true;
                     for(JsonElement name: resultAsJsonArray){
                         final EthicGroup ethicGroup = new EthicGroup(getContext(), name.getAsString(), 0);
-                        ethicGroup.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                Intent intent = new Intent(getActivity(), ViewGroupActivity.class);
-                                intent.putExtra("name", ethicGroup.name);
-                                intent.putExtra("id", ethicGroup.id);
-                                startActivity(intent);
-                            }
-                        });
-                        LayoutInflater.from(getContext()).inflate(R.layout.ethic_group, ethicGroupContainer, false);
-                        ethicGroupContainer.addView(ethicGroup);
+
+                        if(isLeft){
+                            LayoutInflater.from(getContext()).inflate(R.layout.ethic_group, leftEthicGroupContainer, false);
+                            leftEthicGroupContainer.addView(ethicGroup);
+                        }else{
+                            LayoutInflater.from(getContext()).inflate(R.layout.ethic_group, rightEthicGroupContainer, false);
+                            rightEthicGroupContainer.addView(ethicGroup);
+                        }
+                        isLeft = !isLeft;
                     }
                 }else{
                     Log.e("No result", String.valueOf(result.has("groups")));
                 }
             }
         });
-
-        //todo: populate dashboard object
-
 
         buttonCreateGroup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,5 +94,53 @@ public class DashboardFragment extends Fragment {
             }
         });
 
+        removeGroupsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                for(int i = 0; i < leftEthicGroupContainer.getChildCount(); i++){
+                    ((EthicGroup)leftEthicGroupContainer.getChildAt(i)).hideRemoveGroupButton();
+                }
+                for(int i = 0; i < rightEthicGroupContainer.getChildCount(); i++){
+                    ((EthicGroup)rightEthicGroupContainer.getChildAt(i)).hideRemoveGroupButton();
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        DatabaseConnect.getGroups(getContext(), new ServerCallback(){
+            @Override
+            public void onSuccess(JsonObject result) {
+                if(result.has("groups")){
+                    leftEthicGroupContainer.removeAllViews();
+                    rightEthicGroupContainer.removeAllViews();
+                    JsonArray names = result.getAsJsonArray("groups");
+                    JsonArray ids = result.getAsJsonArray("ids");
+                    boolean isLeft = true;
+                    for(int i = 0; i < names.size(); i++){
+                        final EthicGroup ethicGroup = new EthicGroup(getContext(), names.get(i).getAsString(), ids.get(i).getAsInt());
+                        if(isLeft){
+                            LayoutInflater.from(getContext()).inflate(R.layout.ethic_group, leftEthicGroupContainer, false);
+                            leftEthicGroupContainer.addView(ethicGroup);
+                        }else{
+                            LayoutInflater.from(getContext()).inflate(R.layout.ethic_group, rightEthicGroupContainer, false);
+                            rightEthicGroupContainer.addView(ethicGroup);
+                        }
+                        isLeft = !isLeft;
+                    }
+                }else{
+                    Log.e("No result", String.valueOf(result.has("groups")));
+                }
+            }
+        });
+    }
+    void toggleButtonVisibility(){
+        if(removeGroupsButton.getVisibility() == View.GONE){
+            removeGroupsButton.setVisibility(View.VISIBLE);
+        }else{
+            removeGroupsButton.setVisibility(View.GONE);
+        }
     }
 }

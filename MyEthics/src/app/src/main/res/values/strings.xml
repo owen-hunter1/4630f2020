@@ -17,6 +17,7 @@
     <string name="register_button_text"><u>register</u></string>
     <string name="app_name_bold"><b>MyEthics</b></string>
     <string name="text_create_group_button"><b>Create Group</b></string>
+    <string name="text_create_purchase_button"><b>Create Purchase</b></string>
     <string-array name="defaults_array">
         <item>&lt;select item&gt;</item>
         <item>Vegan</item>

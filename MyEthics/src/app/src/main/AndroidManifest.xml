@@ -7,6 +7,7 @@
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".ViewGroupActivity" />
         <activity android:name=".RegisterActivity" />
+        <activity android:name=".CreatePurchaseActivity" />
         <activity android:name=".LoginActivity" />
         <activity
             android:name=".MainActivity"

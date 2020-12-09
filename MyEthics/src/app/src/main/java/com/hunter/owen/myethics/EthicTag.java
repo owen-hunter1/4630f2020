@@ -8,12 +8,12 @@ public class EthicTag {
     public static EthicTag[] createEthicArrayFromArrays(boolean[] likes, int[] ratings, String[] tags) {
         EthicTag[] result = new EthicTag[tags.length];
         for(int i = 0; i < tags.length; i++){
-            result[i] = new EthicTag(likes[i], ratings[i], tags[i]);
+            result[i] = new EthicTag(tags[i], likes[i], ratings[i]);
         }
         return result;
     }
 
-    public EthicTag(boolean liked, int rating, String tag){
+    public EthicTag(String tag, boolean liked, int rating){
         if(rating > 10){
             rating = 10;
         }

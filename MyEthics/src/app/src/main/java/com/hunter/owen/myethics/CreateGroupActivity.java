@@ -1,21 +1,21 @@
 package com.hunter.owen.myethics;
 
 import android.app.Activity;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RatingBar;
 import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -27,15 +27,12 @@ import java.util.regex.Pattern;
 
 public class CreateGroupActivity extends Activity {
     private Spinner defaultsSpinner;
-    private TextView errorText;
     private EditText inputGroupName;
-    private SearchView inputGroupTag;
-    private Button buttonAddTag;
     private Button buttonCreateGroup;
-    private ListView listViewTag;
-    private RadioButton radioLiked;
-    private RadioButton radioDisliked;
-    private RatingBar ratingBar;
+    private LinearLayout tagContainer;
+    private AddTagLayout addTagLayout;
+
+
     //tags
     private List<EthicTag> listEthicTags = new ArrayList<EthicTag>();
 
@@ -51,18 +48,11 @@ public class CreateGroupActivity extends Activity {
         setContentView(R.layout.activity_create_group);
         defaultsSpinner = findViewById(R.id.defaults_spinner);
         inputGroupName = findViewById(R.id.input_group_name);
-        inputGroupTag = findViewById(R.id.input_group_tag);
-        buttonAddTag = findViewById(R.id.add_tag_button);
         buttonCreateGroup = findViewById(R.id.create_group_button);
-        listViewTag = findViewById(R.id.add_tag_list);
-        errorText = findViewById(R.id.create_group_error_text);
-        radioLiked = findViewById(R.id.create_group_like);
-        radioDisliked = findViewById(R.id.create_group_dislike);
-        ratingBar = findViewById(R.id.create_group_ratingBar);
+        tagContainer = findViewById(R.id.create_group_add_tag_container);
 
-        //list adapter
-        final EthicArrayAdapter listAdapter = new EthicArrayAdapter(this, android.R.layout.simple_list_item_1, listEthicTags);
-        listViewTag.setAdapter(listAdapter);
+        addTagLayout = new AddTagLayout(this, listEthicTags);
+        tagContainer.addView(addTagLayout);
 
         //defaults list spinner adapter
         final ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(this, R.array.defaults_array, android.R.layout.simple_spinner_item);
@@ -90,8 +80,8 @@ public class CreateGroupActivity extends Activity {
                         break;
                 }
 
-                listAdapter.notifyDataSetChanged();
-                errorText.setText("");
+                addTagLayout.notifyDataSetChanged();
+                addTagLayout.setError("");
             }
 
             @Override
@@ -100,81 +90,27 @@ public class CreateGroupActivity extends Activity {
             }
         });
 
-
-        //database connection
-        final DatabaseConnect dbc = new DatabaseConnect(this);
-
-        inputGroupTag.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                dbc.queryTags(inputGroupName.getText().toString(), new ServerCallback() {
-                    @Override
-                    public void onSuccess(JsonObject result) {
-
-                        JsonArray jsonArray = result.get("tags").getAsJsonArray();
-                        for(JsonElement e: jsonArray){
-                            listQueryResult.add(e.getAsString());
-                        }
-                    }
-                });
-            }
-        });
-
-        //add tag
-        buttonAddTag.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                EthicTag ethicTag = null;
-
-                if(radioLiked.isChecked()){
-                    ethicTag = new EthicTag(true, (int) Math.ceil((double)ratingBar.getRating() * 2), inputGroupTag.getQuery().toString().replace(' ','-').toLowerCase());
-                }else if(radioDisliked.isChecked()){
-                    ethicTag = new EthicTag(false, (int) Math.ceil((double)ratingBar.getRating() * 2), inputGroupTag.getQuery().toString().replace(' ','-').toLowerCase());
-                }else{
-                    errorText.setText("Like or dislike the tag.");
-                    return;
-                }
-                if(ethicTag.getTag().isEmpty()){
-                    errorText.setText("Enter a tag.");
-                }else if(!pattern.matcher(ethicTag.getTag()).find()){
-                    for(EthicTag e: listEthicTags){
-                        if(ethicTag.getTag().equals(e.getTag())) {
-                            errorText.setText("Duplicate tag.");
-                            return;
-                        }
-                    }
-                    Log.i("Logged tag: ", ethicTag.getTag());
-                    listEthicTags.add(ethicTag);
-                    listAdapter.notifyDataSetChanged();
-                    errorText.setText("");
-                }else{
-                    errorText.setText("Please enter only valid characters (A-Z, 0-9, spaces, and dashes)");
-                }
-            }
-        });
-
-
         //create group
         buttonCreateGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String name = inputGroupName.getText().toString();
                 if(name.isEmpty()){
-                    errorText.setText("Enter a group name.");
+                    addTagLayout.setError("Enter a group name.");
                 }else{
-                    dbc.setErrorText(errorText);
-                    dbc.createGroup(name, listEthicTags);
+                    DatabaseConnect.createGroup(getApplicationContext(), name, listEthicTags, new ServerCallback() {
+                        @Override
+                        public void onSuccess(JsonObject result) {
+                            int success = result.get("success").getAsInt();
+                            if(success == 1) {
+                                CreateGroupActivity.super.onBackPressed();
+                            }else{
+                                String error = result.get("error").getAsString();
+                                addTagLayout.setError(error);
+                            }
+                        }
+                    });
                 }
-            }
-        });
-
-
-        //listview remove item
-        listViewTag.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                listEthicTags.remove(i);
-                listAdapter.notifyDataSetChanged();
             }
         });
     }
