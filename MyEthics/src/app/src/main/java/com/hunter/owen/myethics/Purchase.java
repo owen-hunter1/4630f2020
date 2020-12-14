@@ -10,6 +10,8 @@ public class Purchase {
     @Expose
     private long purchase_date;
     @Expose
+    private int id;
+
     private int score;
 
     public Purchase(String product_name, int date, int score){
@@ -34,6 +36,10 @@ public class Purchase {
 
     public void setPurchase_date(Calendar purchase_date) {
         this.purchase_date = purchase_date.getTimeInMillis();
+    }
+
+    public int getId() {
+        return id;
     }
 
     public void setProduct_name(String product_name) {

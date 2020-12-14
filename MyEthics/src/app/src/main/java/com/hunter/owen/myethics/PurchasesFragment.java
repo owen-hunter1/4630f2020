@@ -78,6 +78,7 @@ public class PurchasesFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        Log.i("resumed: ","resumed");
         DatabaseConnect.getPurchases(getContext(), new ServerCallback() {
             @Override
             public void onSuccess(JsonObject result) {

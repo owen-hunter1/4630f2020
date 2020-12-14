@@ -1,8 +1,13 @@
 package com.hunter.owen.myethics;
 
+import com.google.gson.annotations.Expose;
+
 public class EthicTag {
+    @Expose
+    private String name;
+    @Expose
     private int rating;
-    private String tag;
+    @Expose
     private boolean liked;
 
     public static EthicTag[] createEthicArrayFromArrays(boolean[] likes, int[] ratings, String[] tags) {
@@ -22,11 +27,11 @@ public class EthicTag {
         }
         this.liked = liked;
         this.rating = rating;
-        this.tag = tag;
+        this.name = tag;
     }
 
-    public String getTag(){
-        return tag;
+    public String getName(){
+        return name;
     }
     public boolean isLiked(){
         return liked;
@@ -35,7 +40,7 @@ public class EthicTag {
         return rating;
     }
 
-    public void setTag(String replace) {
-        tag = replace;
+    public void setName(String replace) {
+        name = replace;
     }
 }

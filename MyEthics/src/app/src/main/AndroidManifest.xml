@@ -3,8 +3,10 @@
     package="com.hunter.owen.myethics">
 
     <application android:usesCleartextTraffic="true">
-        <activity android:name=".CreateGroupActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".ViewPurchaseActivity"></activity>
+        <activity
+            android:name=".CreateGroupActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ViewGroupActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".CreatePurchaseActivity" />

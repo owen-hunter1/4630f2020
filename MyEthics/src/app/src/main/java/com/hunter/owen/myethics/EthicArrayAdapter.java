@@ -41,10 +41,10 @@ public class EthicArrayAdapter extends ArrayAdapter<EthicTag> {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        if(ethicTag.getTag().length() > MAX_TAG_LENGTH){
-            viewHolder.tag.setText(ethicTag.getTag().substring(0, MAX_TAG_LENGTH - 3) + "...");
+        if(ethicTag.getName().length() > MAX_TAG_LENGTH){
+            viewHolder.tag.setText(ethicTag.getName().substring(0, MAX_TAG_LENGTH - 3) + "...");
         }else{
-            viewHolder.tag.setText(ethicTag.getTag());
+            viewHolder.tag.setText(ethicTag.getName());
         }
         viewHolder.rating.setText(String.valueOf(ethicTag.getRating()));
         viewHolder.liked.setImageResource(ethicTag.isLiked() ? R.drawable.thumb_up : R.drawable.thumb_down);

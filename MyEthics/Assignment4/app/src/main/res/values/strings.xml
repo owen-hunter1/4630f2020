@@ -1,9 +1,0 @@
-<resources>
-    <string name="app_name">Assignment4</string>
-    <string name="welcome">Mr. Orange Simulator\nBy: Owen Hunter</string>
-    <string name="title">Mr. Orange Simulator</string>
-    <string name="about_me">About me:\nBirthplace: Mars\nWhere I\'d like to live: Mars\n
-        One cool fact about me: please abduct me aliens i am sick and tiired of this garbage planet</string>
-    <string name="investments">1. Everything on bitcoin\n2.Only Eat Lentils\n3. ????\n4. Profit</string>
-
-</resources>

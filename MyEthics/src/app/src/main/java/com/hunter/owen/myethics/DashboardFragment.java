@@ -1,32 +1,22 @@
 package com.hunter.owen.myethics;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
-import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.zip.Inflater;
 
 public class DashboardFragment extends Fragment {
 
@@ -68,8 +58,9 @@ public class DashboardFragment extends Fragment {
                     rightEthicGroupContainer.removeAllViews();
                     JsonArray resultAsJsonArray = result.getAsJsonArray("groups");
                     boolean isLeft = true;
-                    for(JsonElement name: resultAsJsonArray){
-                        final EthicGroup ethicGroup = new EthicGroup(getContext(), name.getAsString(), 0);
+                    for(JsonElement jsonElement: resultAsJsonArray){
+                        EthicGroup group = new Gson().fromJson(jsonElement, EthicGroup.class);
+                        final EthicGroupLayout ethicGroup = new EthicGroupLayout(getContext(), group);
 
                         if(isLeft){
                             LayoutInflater.from(getContext()).inflate(R.layout.ethic_group, leftEthicGroupContainer, false);
@@ -98,10 +89,10 @@ public class DashboardFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 for(int i = 0; i < leftEthicGroupContainer.getChildCount(); i++){
-                    ((EthicGroup)leftEthicGroupContainer.getChildAt(i)).hideRemoveGroupButton();
+                    ((EthicGroupLayout)leftEthicGroupContainer.getChildAt(i)).hideRemoveGroupButton();
                 }
                 for(int i = 0; i < rightEthicGroupContainer.getChildCount(); i++){
-                    ((EthicGroup)rightEthicGroupContainer.getChildAt(i)).hideRemoveGroupButton();
+                    ((EthicGroupLayout)rightEthicGroupContainer.getChildAt(i)).hideRemoveGroupButton();
                 }
             }
         });
@@ -116,11 +107,10 @@ public class DashboardFragment extends Fragment {
                 if(result.has("groups")){
                     leftEthicGroupContainer.removeAllViews();
                     rightEthicGroupContainer.removeAllViews();
-                    JsonArray names = result.getAsJsonArray("groups");
-                    JsonArray ids = result.getAsJsonArray("ids");
+                    JsonArray jsonArray = result.get("groups").getAsJsonArray();
                     boolean isLeft = true;
-                    for(int i = 0; i < names.size(); i++){
-                        final EthicGroup ethicGroup = new EthicGroup(getContext(), names.get(i).getAsString(), ids.get(i).getAsInt());
+                    for(JsonElement jsonElement: jsonArray){
+                        final EthicGroupLayout ethicGroup = new EthicGroupLayout(getContext(), new Gson().fromJson(jsonElement.toString(), EthicGroup.class));
                         if(isLeft){
                             LayoutInflater.from(getContext()).inflate(R.layout.ethic_group, leftEthicGroupContainer, false);
                             leftEthicGroupContainer.addView(ethicGroup);

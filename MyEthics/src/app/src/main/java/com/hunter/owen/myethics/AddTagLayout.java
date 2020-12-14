@@ -58,16 +58,16 @@ public class AddTagLayout extends LinearLayout {
                     errorText.setText("Like or dislike the tag.");
                     return;
                 }
-                if(ethicTag.getTag().isEmpty()){
+                if(ethicTag.getName().isEmpty()){
                     errorText.setText("Enter a tag.");
-                }else if(!pattern.matcher(ethicTag.getTag()).find()){
+                }else if(!pattern.matcher(ethicTag.getName()).find()){
                     for(EthicTag e: ethicTags){
-                        if(ethicTag.getTag().equals(e.getTag())) {
+                        if(ethicTag.getName().equals(e.getName())) {
                             errorText.setText("Duplicate tag.");
                             return;
                         }
                     }
-                    Log.i("Logged tag: ", ethicTag.getTag());
+                    Log.i("Logged tag: ", ethicTag.getName());
                     ethicTags.add(ethicTag);
                     listAdapter.notifyDataSetChanged();
                     errorText.setText("");
@@ -92,4 +92,6 @@ public class AddTagLayout extends LinearLayout {
     public void notifyDataSetChanged() {
         listAdapter.notifyDataSetChanged();
     }
+
+
 }

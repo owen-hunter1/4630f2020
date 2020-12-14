@@ -208,6 +208,104 @@ public class DatabaseConnect {
         queue.add(stringRequest);
     }
 
+    public static void getGroupTag(final Context ctx, final int groupId, final ServerCallback callback){
+        RequestQueue queue = Volley.newRequestQueue(ctx);
+        String url = "http://www.treatyelm.com/ohunter/getGroupTags.php";
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.i("response: " ,response.toString());
+                JsonObject jsonObject = JsonParser.parseString(response).getAsJsonObject();
+                int success = jsonObject.get("success").getAsInt();
+                if(success == 1) {
+                    callback.onSuccess(jsonObject);
+                }else{
+                    String error = jsonObject.get("error").getAsString();
+                    Toast.makeText(ctx, error, Toast.LENGTH_LONG).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(ctx, error.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("group_id", String.valueOf(groupId));
+                return params;
+            }
+        };
+
+        queue.add(stringRequest);
+    }
+
+    public static void getGroupScore(final Context ctx, final int groupId, final List<Purchase> purchases, final ServerCallback callback){
+        RequestQueue queue = Volley.newRequestQueue(ctx);
+        String url = "http://www.treatyelm.com/ohunter/getGroupScore.php";
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                JsonObject jsonObject = JsonParser.parseString(response).getAsJsonObject();
+                int success = jsonObject.get("success").getAsInt();
+                if(success == 1) {
+                    callback.onSuccess(jsonObject);
+                }else{
+                    String error = jsonObject.get("error").getAsString();
+                    Toast.makeText(ctx, error, Toast.LENGTH_LONG).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(ctx, error.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("group_id", String.valueOf(groupId));
+                params.put("purchases", new Gson().toJson(purchases));
+                return params;
+            }
+        };
+
+        queue.add(stringRequest);
+    }
+
+    public static void getPurchaseTag(final Context ctx, final int purchaseId, final ServerCallback callback){
+        RequestQueue queue = Volley.newRequestQueue(ctx);
+        String url = "http://www.treatyelm.com/ohunter/getPurchaseTags.php";
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                JsonObject jsonObject = JsonParser.parseString(response).getAsJsonObject();
+                int success = jsonObject.get("success").getAsInt();
+                if(success == 1) {
+                    callback.onSuccess(jsonObject);
+                }else{
+                    String error = jsonObject.get("error").getAsString();
+                    Toast.makeText(ctx, error, Toast.LENGTH_LONG).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(ctx, error.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("product_id", String.valueOf(purchaseId));
+                return params;
+            }
+        };
+
+        queue.add(stringRequest);
+    }
+
     public static void getPurchases(final Context ctx, final ServerCallback callback){
         RequestQueue queue = Volley.newRequestQueue(ctx);
         String url = "http://www.treatyelm.com/ohunter/getPurchases.php";

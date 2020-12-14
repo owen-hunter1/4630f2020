@@ -1,88 +1,53 @@
 package com.hunter.owen.myethics;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentManager;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import com.google.gson.annotations.Expose;
 
-import com.google.gson.JsonObject;
+import java.util.ArrayList;
+import java.util.List;
 
-public class EthicGroup extends LinearLayout {
+public class EthicGroup {
+    @Expose
+    private String name;
+    @Expose
+    private int id;
+    @Expose
+    private List<EthicTag> tags;
 
-    public String name;
-    public int id;
-    private ImageView icon;
-    private String[] attributes;
-    private TextView groupNameText;
-    private ImageButton removeGroupButton;
-    private Button ethicGroupButton;
-
-    public EthicGroup(final Context context, final String name, final int id) {
-        super(context);
+    public EthicGroup(String name, int id){
         this.name = name;
         this.id = id;
-        LayoutInflater li = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        LinearLayout layout = (LinearLayout) li.inflate(R.layout.ethic_group, this, true);
-        groupNameText = layout.findViewById(R.id.ethic_group_name);
-        groupNameText.setText(name);
-        removeGroupButton = layout.findViewById(R.id.remove_group_button);
-        ethicGroupButton = layout.findViewById(R.id.ethic_group_button);
-
-        this.setOnLongClickListener(new OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                removeGroupButton.setVisibility(VISIBLE);
-                return true;
-            }
-        });
-
-        ethicGroupButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), ViewGroupActivity.class);
-                intent.putExtra("name", name);
-                intent.putExtra("id", id);
-                getContext().startActivity(intent);
-            }
-        });
-
-        removeGroupButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DatabaseConnect.deleteGroup(view.getContext(), id, new ServerCallback() {
-                    @Override
-                    public void onSuccess(JsonObject result) {
-
-                    }
-                });
-                EthicGroup.super.setVisibility(GONE);
-            }
-        });
+        this.tags = new ArrayList<EthicTag>();
     }
 
-
-    public void setIcon() {
-
+    public EthicGroup(String name, int id, List<EthicTag> tags){
+        this.name = name;
+        this.id = id;
+        this.tags = tags;
     }
 
-    public void addAttribute() {
-
+    public EthicGroup(EthicGroup ethicGroup) {
+        this.name = ethicGroup.name;
+        this.id = ethicGroup.id;
+        this.tags = ethicGroup.tags;
     }
 
-    public void removeAttribute() {
-
+    public List<EthicTag> getTagsList() {
+        return tags;
     }
 
-    public void hideRemoveGroupButton(){
-        removeGroupButton.setVisibility(GONE);
+    public void setTags(List<EthicTag> tags) {
+        this.tags = tags;
+    }
+
+    public void addTag(EthicTag tag) {
+        this.tags.add(tag);
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
     }
 }

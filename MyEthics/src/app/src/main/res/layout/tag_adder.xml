@@ -47,7 +47,8 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center">
+                        android:layout_gravity="center"
+                        android:orientation="horizontal">
                         <RadioGroup
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -64,11 +65,11 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:background="@drawable/thumb_down"
-                                android:layout_marginHorizontal="5dp"/>
+                                android:layout_marginLeft="5dp"/>
                         </RadioGroup>
                         <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:gravity="center"
                             android:layout_marginLeft="20dp">
                             <RatingBar
@@ -76,9 +77,10 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:min="0"
+                                android:isIndicator="false"
                                 android:max="10"
-                                style="?android:attr/ratingBarStyleSmall"
-                                />
+                                android:numStars="5"
+                                style="?android:attr/ratingBarStyleSmall" />
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
